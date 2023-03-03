@@ -1,27 +1,27 @@
-// Sud au cul.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
-//
+
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <windows.h>
 
-//pour mettre de la couleur
+//Pour mettre de la couleur
 void Color(int couleurDuTexte, int couleurDeFond) // fonction d'affichage de couleurs
 {
     HANDLE H = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H, couleurDeFond * 16 + couleurDuTexte);
 }
 
-//on initialise les variables globales
+//On initialise les variables globales
 int rows, cols, mines;
 int** grid;
 int** revealed;
 int** flags;
-//permet au joueur de choisir la difficulté à laquelle il souhaite jouer et adapte la taille de la grille en conséquence
+
+//Propose au joueur de sélectionner la difficulté
 int setDifficulty(){
     int dif;
-    printf("Choisir la difficulté (1, 2, 3) : ");
+    printf("Choisir la difficulte (1, 2, 3) : ");
     scanf_s("%d", &dif);
     while (getchar() != '\n');
     if (dif == 1) {
@@ -149,7 +149,7 @@ void printGrid() {
 
         for (j = 0; j < cols; j++) {
             if (flags[i][j] == 1 && revealed[i][j] == 0) {
-                printf(" F ");
+                printf(" ? ");
             }
             else if (revealed[i][j] == 0) {
                 printf(" . ");
@@ -231,16 +231,16 @@ int main() {
         system("CLS");
         printGrid();
 
-        printf("Enter x and y coordinates (separated by space): ");
+        printf(" Entrer les coordonnees (avec un espace entre les deux): ");
         scanf_s("%d %d", &x, &y);
         while (getchar() != '\n');
 
         if (x < 0 || x >= cols || y < 0 || y >= rows) {
-            printf("Invalid coordinates!\n");
+            printf("Valeurs incorrect\n");
             continue;
         }
 
-        printf("Enter r for reveal, f for flag");
+        printf("Taper r pour reveler la case, et f pour planter un drapeau: ");
         scanf_s("%c", &action, 1);
         while (getchar() != '\n');
 
@@ -255,7 +255,7 @@ int main() {
                     }
                 }
                 printGrid();
-                printf("You lost!\n");
+                printf("Une mine a exploser, c'est une defaite\n");
                 break;
             }
 
@@ -273,7 +273,7 @@ int main() {
             if (victory == 1) {
                 system("CLS");
                 printGrid();
-                printf("You won!\n");
+                printf("Victoire, aucune mine n'a exploser !\n");
                 break;
             }
         }
